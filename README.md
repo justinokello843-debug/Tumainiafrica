@@ -2,9 +2,9 @@
 
 Three self-contained pages (HTML, CSS, and JavaScript each in a single file, no build step required):
 
-- `index.html` — the main site
+- `index.html` — the main site, now leading with the Sudan / Eastern DRC / Sahel crisis picture
 - `give.html` — the dedicated donation page
-- `crisis-response.html` — verified, sourced figures on the Sudan, Eastern DRC, Sahel, and Horn of Africa crises, plus Tumaini Africa's honest expansion roadmap
+- `crisis-response.html` — the full, sourced deep-dive on these crises and Tumaini Africa's honest expansion roadmap
 
 ## Deploying this site
 
@@ -13,6 +13,6 @@ Three self-contained pages (HTML, CSS, and JavaScript each in a single file, no 
 3. Your site goes live at a free `https://your-project-name.vercel.app` URL, with `/give.html` and `/crisis-response.html` reachable automatically.
 4. Every future edit and push automatically redeploys within seconds.
 
-## Keeping crisis-response.html accurate
+## Keeping the crisis figures accurate
 
-The figures on this page are current as of August 2026 and cited at the bottom of the page. Because Sudan, DRC, and the Sahel crises change quickly, revisit the sources every few months and update the stat numbers so the page doesn't go stale.
+The figures on the homepage and crisis-response.html are current as of August 2026 and cited at the bottom of crisis-response.html. Revisit the sources every few months and update the numbers so the page doesn't go stale.
