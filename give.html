@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Give — Tumaini Africa</title>
+<meta name="description" content="Give to Tumaini Africa in your own currency, however works best from wherever you are — bank wire, card, PayPal, or mobile money.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,450;9..144,560;9..144,650&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1B1035; --ink-soft:#2E2148; --gold:#E8A93B; --gold-deep:#C6862A;
+    --ember:#C2451D; --acacia:#3F6E52; --bone:#F7F3EA; --bone-dim:#EFE7D6;
+    --charcoal:#221A2E; --line: rgba(27,16,53,0.12); --line-light: rgba(247,243,234,0.18);
+    --max: 760px; --radius: 4px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; overflow-x:hidden;}
+  body{
+    margin:0; overflow-x:hidden; background:var(--bone); color:var(--charcoal);
+    font-family:'Work Sans', sans-serif; font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Fraunces', serif; font-weight:560; margin:0 0 .5em; color:var(--ink); letter-spacing:-0.01em;}
+  p{margin:0 0 1em;}
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em;}
+  .wrap{max-width:var(--max); margin:0 auto; padding:0 24px;}
+  img,svg{display:block; max-width:100%;}
+  button{font-family:inherit; cursor:pointer;}
+  ::selection{background:var(--gold); color:var(--ink);}
+  @media (prefers-reduced-motion: reduce){ *{animation-duration:0.001ms !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;} }
+
+  .kente{
+    height:8px; width:100%;
+    background:repeating-linear-gradient(115deg, var(--gold) 0 18px, var(--ember) 18px 30px, var(--acacia) 30px 42px, var(--ink) 42px 54px);
+    background-size:54px 8px;
+  }
+
+  /* top bar */
+  .topbar{background:var(--ink); padding:20px 0;}
+  .topbar .wrap{display:flex; align-items:center; justify-content:space-between;}
+  .back-link{
+    display:inline-flex; align-items:center; gap:8px; color:rgba(247,243,234,0.75);
+    text-decoration:none; font-size:0.88rem; font-weight:500;
+  }
+  .back-link:hover{color:var(--bone);}
+  .back-link svg{width:16px; height:16px;}
+  .brand-mini{display:flex; align-items:center; gap:9px; text-decoration:none;}
+  .brand-mini svg{width:26px; height:26px;}
+  .brand-mini span{color:var(--bone); font-family:'Fraunces',serif; font-size:1rem; font-weight:560;}
+
+  /* hero */
+  .give-hero{
+    background:radial-gradient(ellipse 130% 100% at 20% 0%, #2E2148 0%, var(--ink) 55%, #150B29 100%);
+    color:var(--bone); padding:56px 0 44px; text-align:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px; font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--gold);
+    border:1px solid rgba(232,169,59,0.4); padding:6px 13px; border-radius:100px; margin-bottom:18px;
+  }
+  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); display:inline-block;}
+  .give-hero h1{color:var(--bone); font-size:clamp(1.9rem,4.4vw,2.6rem); max-width:18ch; margin:0 auto 14px;}
+  .give-hero p{color:rgba(247,243,234,0.78); max-width:44ch; margin:0 auto; font-size:1.02rem;}
+
+  /* main panel */
+  main{padding:48px 0 80px;}
+  .panel{
+    background:#fff; border:1px solid var(--line); border-radius:12px;
+    box-shadow:0 20px 60px rgba(27,16,53,0.08); overflow:hidden;
+  }
+  .panel-section{padding:32px 30px;}
+  .panel-section + .panel-section{border-top:1px solid var(--line);}
+  .panel-label{
+    font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase;
+    color:#8c7f9c; margin-bottom:16px; display:block;
+  }
+
+  .currency-row{display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap;}
+  .currency-pill{
+    padding:8px 16px; border-radius:100px; border:1px solid var(--line); background:transparent;
+    font-family:'IBM Plex Mono',monospace; font-size:0.82rem; font-weight:500; color:var(--charcoal); transition:all .15s ease;
+  }
+  .currency-pill.active{background:var(--ink); color:var(--bone); border-color:var(--ink);}
+
+  .give-tabs{display:flex; gap:0; margin-bottom:24px; border-bottom:1px solid var(--line);}
+  .give-tab{
+    padding:9px 4px; margin-right:26px; background:none; border:none; border-bottom:2px solid transparent;
+    font-weight:600; font-size:0.94rem; color:#8c7f9c;
+  }
+  .give-tab.active{color:var(--ink); border-color:var(--ember);}
+
+  .amount-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:10px;}
+  @media (max-width:480px){.amount-grid{grid-template-columns:1fr 1fr;}}
+  .amount-btn{
+    padding:16px 12px; border:1px solid var(--line); border-radius:6px; background:#fff; text-align:left; transition:all .15s ease;
+  }
+  .amount-btn:hover{border-color:var(--gold-deep);}
+  .amount-btn.active{border-color:var(--ember); background:rgba(194,69,29,0.05); box-shadow:0 0 0 1px var(--ember);}
+  .amount-btn b{display:block; font-family:'Fraunces',serif; font-size:1.25rem; color:var(--ink);}
+  .amount-btn span{font-size:0.76rem; color:#6b5f7c; line-height:1.35; display:block; margin-top:4px;}
+
+  .custom-amount{margin-top:14px; display:flex; align-items:center; gap:10px;}
+  .custom-amount label{font-size:0.85rem; color:#6b5f7c;}
+  .custom-amount input{
+    flex:1; padding:11px 14px; border:1px solid var(--line); border-radius:6px; font-family:'IBM Plex Mono',monospace;
+    font-size:0.95rem; min-width:0;
+  }
+  .custom-amount input:focus-visible{outline:2px solid var(--ember); outline-offset:1px;}
+
+  .summary-bar{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    background:var(--bone-dim); padding:18px 30px; flex-wrap:wrap;
+  }
+  .summary-amount{font-family:'Fraunces',serif; font-size:1.5rem; color:var(--ink);}
+  .summary-amount span{font-family:'Work Sans',sans-serif; font-size:0.72rem; color:#6b5f7c; text-transform:uppercase; letter-spacing:0.05em; margin-left:6px;}
+  .summary-note{font-size:0.82rem; color:#544966; max-width:34ch;}
+
+  /* payment options */
+  .pay-option{border:1px solid var(--line); border-radius:8px; margin-bottom:12px; overflow:hidden;}
+  .pay-option:last-child{margin-bottom:0;}
+  .pay-option-head{
+    width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:16px 18px; background:#fff; border:none; text-align:left;
+  }
+  .pay-option-head-left{display:flex; align-items:center; gap:14px;}
+  .pay-option-head svg{width:22px; height:22px; color:var(--ember); flex-shrink:0;}
+  .pay-option-head b{display:block; font-size:0.96rem; color:var(--ink);}
+  .pay-option-head span.subtext{display:block; font-size:0.78rem; color:#8c7f9c; margin-top:2px;}
+  .pay-option-chevron{width:16px; height:16px; color:#8c7f9c; transition:transform .2s ease; flex-shrink:0;}
+  .pay-option.open .pay-option-chevron{transform:rotate(180deg);}
+  .status-pill{
+    font-family:'IBM Plex Mono',monospace; font-size:0.65rem; padding:3px 9px; border-radius:100px;
+    background:rgba(63,110,82,0.14); color:var(--acacia); white-space:nowrap;
+  }
+  .status-pill.pending{background:var(--bone-dim); color:#8c7f9c;}
+  .pay-option-panel{display:none; padding:0 18px 18px; background:#fff;}
+  .pay-option.open .pay-option-panel{display:block;}
+
+  .bank-detail-grid{background:var(--bone-dim); border-radius:6px; padding:16px 18px; margin-top:4px;}
+  .bank-detail-row{display:flex; justify-content:space-between; align-items:center; gap:12px; padding:9px 0; border-bottom:1px solid rgba(27,16,53,0.08);}
+  .bank-detail-row:last-child{border-bottom:none;}
+  .bank-detail-row .k{font-size:0.78rem; color:#6b5f7c;}
+  .bank-detail-row .v{font-family:'IBM Plex Mono',monospace; font-size:0.86rem; color:var(--ink); font-weight:500; text-align:right; display:flex; align-items:center; flex-wrap:wrap; justify-content:flex-end; gap:6px;}
+  .copy-btn{background:var(--ink); color:var(--bone); border:none; border-radius:5px; padding:6px 12px; font-size:0.72rem; font-weight:600;}
+  .copy-btn.copied{background:var(--acacia);}
+  .pay-option-panel p.hint{font-size:0.82rem; color:#544966; margin:12px 0 0;}
+  .contact-row{display:flex; gap:10px; margin-top:14px; flex-wrap:wrap;}
+  .contact-row a{
+    flex:1; text-align:center; padding:11px 14px; border-radius:6px; border:1px solid var(--line);
+    font-size:0.85rem; font-weight:600; text-decoration:none; color:var(--ink); min-width:140px;
+  }
+  .contact-row a:hover{border-color:var(--ember); color:var(--ember);}
+
+  /* gateway integration point — swap the placeholder button for your real checkout link */
+  .gateway-slot{
+    border:1px dashed rgba(63,110,82,0.5); border-radius:6px; padding:14px 16px; margin-top:12px;
+    background:rgba(63,110,82,0.05); font-size:0.78rem; color:var(--acacia);
+  }
+
+  .trust-strip{
+    display:flex; gap:20px; flex-wrap:wrap; justify-content:center; padding:30px 24px 10px;
+    font-size:0.82rem; color:#6b5f7c;
+  }
+  .trust-strip span{display:flex; align-items:center; gap:7px;}
+  .trust-strip svg{width:16px; height:16px; color:var(--acacia);}
+
+  footer{background:#140A28; color:rgba(247,243,234,0.6); padding:36px 0; text-align:center; font-size:0.82rem;}
+  footer a{color:var(--gold); text-decoration:none;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:none;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to Tumaini Africa
+    </a>
+    <a href="index.html" class="brand-mini">
+      <svg viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="23" stroke="#E8A93B" stroke-width="1.4"/><path d="M24 10c-3 4-9 5-9 12 0 5 4 9 9 9s9-4 9-9M24 10c3 4 3 8 0 12M24 10v22M24 31c-3 3-8 3-8 8h16c0-5-5-5-8-8Z" stroke="#E8A93B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Tumaini Africa</span>
+    </a>
+  </div>
+</div>
+<div class="kente" role="presentation"></div>
+
+<section class="give-hero">
+  <div class="wrap">
+    <span class="eyebrow">Give</span>
+    <h1>Your gift, delivered your way</h1>
+    <p>Pick your currency, choose an amount, and give however works best from wherever you are in the world.</p>
+  </div>
+</section>
+
+<main>
+  <div class="wrap">
+    <div class="panel reveal">
+
+      <div class="panel-section">
+        <span class="panel-label">1 · Currency &amp; frequency</span>
+        <div class="currency-row" id="currencyRow" role="group" aria-label="Select currency">
+          <button class="currency-pill active" data-cur="USD">USD $</button>
+          <button class="currency-pill" data-cur="GBP">GBP £</button>
+          <button class="currency-pill" data-cur="EUR">EUR €</button>
+          <button class="currency-pill" data-cur="CAD">CAD C$</button>
+          <button class="currency-pill" data-cur="AED">AED د.إ</button>
+        </div>
+        <div class="give-tabs" role="tablist" aria-label="Donation frequency">
+          <button class="give-tab active" data-freq="once">One-time</button>
+          <button class="give-tab" data-freq="monthly">Monthly</button>
+        </div>
+
+        <span class="panel-label">2 · Amount</span>
+        <div class="amount-grid" id="amountGrid" role="group" aria-label="Donation amount"></div>
+        <div class="custom-amount">
+          <label for="customAmount">Or enter your own:</label>
+          <input type="number" id="customAmount" min="1" placeholder="e.g. 75">
+        </div>
+      </div>
+
+      <div class="summary-bar">
+        <div class="summary-amount" id="summaryAmount">$120 <span>one-time</span></div>
+        <div class="summary-note" id="summaryNote">Start-up grant materials for a widow's small business</div>
+      </div>
+
+      <div class="panel-section">
+        <span class="panel-label">3 · How you'd like to pay</span>
+
+        <div class="pay-option open" data-option="wire">
+          <button class="pay-option-head" type="button">
+            <span class="pay-option-head-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="10" width="18" height="9" rx="1"/><path d="M3 10 12 4l9 6"/><path d="M7 14v3M12 14v3M17 14v3"/></svg>
+              <span><b>Bank transfer (SWIFT wire)</b><span class="subtext">Works from any country, any bank</span></span>
+            </span>
+            <span style="display:flex; align-items:center; gap:10px;">
+              <span class="status-pill">Available now</span>
+              <svg class="pay-option-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="pay-option-panel">
+            <div class="bank-detail-grid">
+              <div class="bank-detail-row"><span class="k">Bank</span><span class="v">Co-operative Bank of Kenya</span></div>
+              <div class="bank-detail-row"><span class="k">Account name</span><span class="v">DOVE ASSET MANAGEMENT</span></div>
+              <div class="bank-detail-row"><span class="k">Account number</span><span class="v">01192763735500<button class="copy-btn" data-copy="01192763735500" type="button">Copy</button></span></div>
+              <div class="bank-detail-row"><span class="k">Branch</span><span class="v">Kangemi Branch</span></div>
+              <div class="bank-detail-row"><span class="k">SWIFT / BIC</span><span class="v">KCOOKENA<button class="copy-btn" data-copy="KCOOKENA" type="button">Copy</button></span></div>
+              <div class="bank-detail-row"><span class="k">Bank code (sort code)</span><span class="v">11074</span></div>
+            </div>
+            <p class="hint">Ask your bank for an <strong>international wire / SWIFT transfer</strong> and quote these details. Most banks in the US, UK, Canada, the UAE, and the EU offer this online in a few minutes. Please email us your reference so we can confirm and thank you.</p>
+            <p class="hint">Donations are currently received through <strong>Dove Asset Management</strong>, our founder's registered company, while Tumaini Africa's own independent charity registration is in progress. This is disclosed here for full transparency.</p>
+          </div>
+        </div>
+
+        <div class="pay-option" data-option="card">
+          <button class="pay-option-head" type="button">
+            <span class="pay-option-head-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+              <span><b>Card, PayPal, Apple Pay &amp; Google Pay</b><span class="subtext">Instant, one-tap checkout</span></span>
+            </span>
+            <span style="display:flex; align-items:center; gap:10px;">
+              <span class="status-pill pending">Activating</span>
+              <svg class="pay-option-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="pay-option-panel">
+            <p class="hint">Our secure checkout (settling directly into the same Co-operative Bank account) is being activated. Message us and we'll send a one-tap payment link within 24 hours — no bank details needed on your end.</p>
+            <!-- GATEWAY_INTEGRATION_POINT: once you have a Flutterwave / Paystack / Stripe account, replace this block with your real checkout button or payment link -->
+            <div class="gateway-slot">Reserved for your live payment gateway checkout button (Flutterwave / Paystack / Stripe) once connected.</div>
+            <div class="contact-row">
+              <a href="mailto:hello@tumainiafrica.org?subject=Card%20donation%20request">Email us</a>
+              <a href="#" id="waCardLink">WhatsApp us</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="pay-option" data-option="mobile">
+          <button class="pay-option-head" type="button">
+            <span class="pay-option-head-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M6 18h12"/></svg>
+              <span><b>Mobile money</b><span class="subtext">M-Pesa &amp; regional mobile wallets</span></span>
+            </span>
+            <span style="display:flex; align-items:center; gap:10px;">
+              <span class="status-pill pending">On request</span>
+              <svg class="pay-option-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </span>
+          </button>
+          <div class="pay-option-panel">
+            <p class="hint">Giving from Kenya or a neighbouring country? Message us for our M-Pesa Paybill / Till number and we'll reply right away.</p>
+            <div class="contact-row"><a href="mailto:hello@tumainiafrica.org?subject=Mobile%20money%20donation">Email us</a></div>
+          </div>
+        </div>
+
+        <div class="pay-option" data-option="other">
+          <button class="pay-option-head" type="button">
+            <span class="pay-option-head-left">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span><b>Something else works better for you?</b><span class="subtext">Cheque, employer match, foundation grant</span></span>
+            </span>
+            <svg class="pay-option-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="pay-option-panel">
+            <p class="hint">Tell us how you'd like to give and we'll personally arrange it — including matched corporate giving, donor-advised funds, or a cheque by post.</p>
+            <div class="contact-row"><a href="mailto:hello@tumainiafrica.org?subject=Donation%20enquiry">Email us</a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trust-strip">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4Z"/></svg>100% traceable to our Co-op Bank account</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-4.6-9.6-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.6 6c-2.6 4.4-9.6 9-9.6 9Z"/></svg>Every route reaches the same fund</span>
+        <span><a href="index.html#transparency" style="color:var(--acacia); text-decoration:underline;">See our transparency page →</a></span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Questions before you give? Email <a href="mailto:hello@tumainiafrica.org">hello@tumainiafrica.org</a> — we personally reply to every message.
+  </div>
+</footer>
+
+<script>
+  const impactData = {
+    USD: { symbol:'$', once:[
+        {amt:25, note:'One week of meals for a child in shelter'},
+        {amt:60, note:'A month of transport to clinic visits for a sick neighbour'},
+        {amt:120, note:'Start-up grant materials for a widow\u2019s small business'},
+        {amt:250, note:'A term of reading and writing materials for a child with no classroom'},
+        {amt:500, note:'One month of a safe shelter\u2019s running costs'},
+        {amt:1000, note:'A term of schooling for five children'} ],
+      monthly:[
+        {amt:15, note:'Feeds one child in shelter every month'},
+        {amt:35, note:'Funds a widow\u2019s income-training course over 3 months'},
+        {amt:60, note:'Covers ongoing clinic transport for a family'},
+        {amt:100, note:'Sponsors one child\u2019s full schooling'},
+        {amt:250, note:'Keeps a classroom roofed, staffed, and stocked'},
+        {amt:500, note:'Funds a full local outreach team for a month'} ] },
+    GBP: { symbol:'£', once:[
+        {amt:20, note:'One week of meals for a child in shelter'},
+        {amt:45, note:'A month of transport to clinic visits for a sick neighbour'},
+        {amt:95, note:'Start-up grant materials for a widow\u2019s small business'},
+        {amt:200, note:'A term of reading and writing materials for a child with no classroom'},
+        {amt:400, note:'One month of a safe shelter\u2019s running costs'},
+        {amt:800, note:'A term of schooling for five children'} ],
+      monthly:[
+        {amt:12, note:'Feeds one child in shelter every month'},
+        {amt:28, note:'Funds a widow\u2019s income-training course over 3 months'},
+        {amt:48, note:'Covers ongoing clinic transport for a family'},
+        {amt:80, note:'Sponsors one child\u2019s full schooling'},
+        {amt:200, note:'Keeps a classroom roofed, staffed, and stocked'},
+        {amt:400, note:'Funds a full local outreach team for a month'} ] },
+    EUR: { symbol:'€', once:[
+        {amt:23, note:'One week of meals for a child in shelter'},
+        {amt:55, note:'A month of transport to clinic visits for a sick neighbour'},
+        {amt:110, note:'Start-up grant materials for a widow\u2019s small business'},
+        {amt:230, note:'A term of reading and writing materials for a child with no classroom'},
+        {amt:460, note:'One month of a safe shelter\u2019s running costs'},
+        {amt:920, note:'A term of schooling for five children'} ],
+      monthly:[
+        {amt:14, note:'Feeds one child in shelter every month'},
+        {amt:32, note:'Funds a widow\u2019s income-training course over 3 months'},
+        {amt:55, note:'Covers ongoing clinic transport for a family'},
+        {amt:92, note:'Sponsors one child\u2019s full schooling'},
+        {amt:230, note:'Keeps a classroom roofed, staffed, and stocked'},
+        {amt:460, note:'Funds a full local outreach team for a month'} ] },
+    CAD: { symbol:'C$', once:[
+        {amt:34, note:'One week of meals for a child in shelter'},
+        {amt:82, note:'A month of transport to clinic visits for a sick neighbour'},
+        {amt:165, note:'Start-up grant materials for a widow\u2019s small business'},
+        {amt:340, note:'A term of reading and writing materials for a child with no classroom'},
+        {amt:680, note:'One month of a safe shelter\u2019s running costs'},
+        {amt:1360, note:'A term of schooling for five children'} ],
+      monthly:[
+        {amt:20, note:'Feeds one child in shelter every month'},
+        {amt:48, note:'Funds a widow\u2019s income-training course over 3 months'},
+        {amt:82, note:'Covers ongoing clinic transport for a family'},
+        {amt:135, note:'Sponsors one child\u2019s full schooling'},
+        {amt:340, note:'Keeps a classroom roofed, staffed, and stocked'},
+        {amt:680, note:'Funds a full local outreach team for a month'} ] },
+    AED: { symbol:'د.إ', once:[
+        {amt:90, note:'One week of meals for a child in shelter'},
+        {amt:220, note:'A month of transport to clinic visits for a sick neighbour'},
+        {amt:440, note:'Start-up grant materials for a widow\u2019s small business'},
+        {amt:920, note:'A term of reading and writing materials for a child with no classroom'},
+        {amt:1835, note:'One month of a safe shelter\u2019s running costs'},
+        {amt:3670, note:'A term of schooling for five children'} ],
+      monthly:[
+        {amt:55, note:'Feeds one child in shelter every month'},
+        {amt:130, note:'Funds a widow\u2019s income-training course over 3 months'},
+        {amt:220, note:'Covers ongoing clinic transport for a family'},
+        {amt:365, note:'Sponsors one child\u2019s full schooling'},
+        {amt:920, note:'Keeps a classroom roofed, staffed, and stocked'},
+        {amt:1835, note:'Funds a full local outreach team for a month'} ] }
+  };
+
+  let currentCur = 'USD';
+  let currentFreq = 'once';
+  let selectedIndex = 2;
+  let customValue = null;
+
+  const amountGrid = document.getElementById('amountGrid');
+  const currencyRow = document.getElementById('currencyRow');
+  const giveTabs = document.querySelectorAll('.give-tab');
+  const customInput = document.getElementById('customAmount');
+  const summaryAmount = document.getElementById('summaryAmount');
+  const summaryNote = document.getElementById('summaryNote');
+
+  function renderAmounts(){
+    const data = impactData[currentCur][currentFreq];
+    amountGrid.innerHTML = '';
+    data.forEach((item, i) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'amount-btn' + (customValue === null && i === selectedIndex ? ' active' : '');
+      b.innerHTML = '<b>' + impactData[currentCur].symbol + item.amt + '</b><span>' + item.note + '</span>';
+      b.addEventListener('click', () => { selectedIndex = i; customValue = null; customInput.value=''; renderAmounts(); });
+      amountGrid.appendChild(b);
+    });
+    updateSummary();
+  }
+
+  function updateSummary(){
+    const freqWord = currentFreq === 'monthly' ? 'monthly' : 'one-time';
+    if(customValue !== null && customValue > 0){
+      summaryAmount.innerHTML = impactData[currentCur].symbol + customValue + ' <span>' + freqWord + '</span>';
+      summaryNote.textContent = 'Every gift, of any size, moves this work forward.';
+    } else {
+      const item = impactData[currentCur][currentFreq][selectedIndex];
+      summaryAmount.innerHTML = impactData[currentCur].symbol + item.amt + ' <span>' + freqWord + '</span>';
+      summaryNote.textContent = item.note;
+    }
+  }
+
+  currencyRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('.currency-pill');
+    if(!btn) return;
+    currencyRow.querySelectorAll('.currency-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    currentCur = btn.dataset.cur;
+    if(selectedIndex > impactData[currentCur][currentFreq].length - 1) selectedIndex = 2;
+    renderAmounts();
+  });
+
+  giveTabs.forEach(tab => tab.addEventListener('click', () => {
+    giveTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    currentFreq = tab.dataset.freq;
+    renderAmounts();
+  }));
+
+  customInput.addEventListener('input', () => {
+    const val = parseFloat(customInput.value);
+    if(customInput.value === '' || isNaN(val)){
+      customValue = null;
+    } else {
+      customValue = val;
+    }
+    renderAmounts();
+  });
+
+  renderAmounts();
+
+  // Accordion behaviour for payment options
+  document.querySelectorAll('.pay-option-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const option = head.closest('.pay-option');
+      const wasOpen = option.classList.contains('open');
+      document.querySelectorAll('.pay-option').forEach(o => o.classList.remove('open'));
+      if(!wasOpen) option.classList.add('open');
+    });
+  });
+
+  // Copy-to-clipboard
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const text = btn.dataset.copy;
+      navigator.clipboard?.writeText(text).then(() => {
+        btn.textContent = 'Copied';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+      }).catch(() => { btn.textContent = text; });
+    });
+  });
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+</script>
+
+</body>
+</html>
