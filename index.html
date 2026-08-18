@@ -226,6 +226,21 @@
 
   .give-teaser{display:grid; grid-template-columns:1.2fr 0.8fr; gap:64px; align-items:center;}
   @media (max-width:900px){.give-teaser{grid-template-columns:1fr; gap:40px;}}
+
+  .crisis-teaser{
+    background:#fff; border:1px solid var(--line); border-left:4px solid var(--ember); border-radius:8px;
+    padding:36px 40px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;
+    box-shadow:0 12px 34px rgba(27,16,53,0.06);
+  }
+  .crisis-teaser-text{flex:1; min-width:260px;}
+  .crisis-teaser-text .eyebrow{color:var(--ember); border-color:rgba(194,69,29,0.3);}
+  .crisis-teaser-text .eyebrow::before{background:var(--ember);}
+  .crisis-teaser-text h3{font-size:1.35rem; margin-bottom:8px;}
+  .crisis-teaser-text p{color:#544966; font-size:0.98rem; margin-bottom:0; max-width:56ch;}
+  .crisis-stats{display:flex; gap:28px; flex-shrink:0; flex-wrap:wrap;}
+  .crisis-stats div{text-align:center;}
+  .crisis-stats b{display:block; font-family:'Fraunces',serif; font-size:1.5rem; color:var(--ember);}
+  .crisis-stats span{font-size:0.72rem; color:#8c7f9c; text-transform:uppercase; letter-spacing:0.04em;}
   .give-teaser-inner .eyebrow{color:var(--gold); border-color:rgba(232,169,59,0.4);}
   .give-teaser-inner .eyebrow::before{background:var(--gold);}
   .give-teaser-inner h2{color:var(--bone); font-size:clamp(1.9rem,3.2vw,2.6rem); max-width:15ch;}
@@ -322,14 +337,6 @@
   .reveal.in{opacity:1; transform:none;}
 
 </style>
-<script>
-  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/insights/script.js"></script>
-<script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
 </head>
 <body>
 
@@ -351,6 +358,7 @@
     <nav class="links" id="navLinks">
       <a href="#story">Our Story</a>
       <a href="#work">Our Work</a>
+      <a href="crisis-response.html">Crisis Response</a>
       <a href="#transparency">Transparency</a>
       <a href="#involved">Get Involved</a>
       <a href="#contact">Contact</a>
@@ -457,6 +465,20 @@
           <h3>Education for the less fortunate</h3>
           <p>For too many children, there is no classroom — only open ground beneath a tree. We provide two daily meals, reading and writing materials, and cover school fees, so that poverty never has to be the reason a child stops learning.</p>
         </article>
+      </div>
+
+      <div class="crisis-teaser reveal" style="margin-top:36px;">
+        <div class="crisis-teaser-text">
+          <span class="eyebrow">Where the need is greatest</span>
+          <h3>Sudan and Eastern DRC are facing the world's worst humanitarian crises</h3>
+          <p>See the verified figures, and our honest, funded plan to grow toward helping there.</p>
+        </div>
+        <div class="crisis-stats">
+          <div><b>13.6M</b><span>Displaced in Sudan</span></div>
+          <div><b>7M+</b><span>Displaced in DRC</span></div>
+          <div><b>24M+</b><span>In need, Sahel</span></div>
+        </div>
+        <a href="crisis-response.html" class="btn btn-ink" style="border-color:var(--ember); color:var(--ember);">See the full picture →</a>
       </div>
     </div>
   </section>
